@@ -4,6 +4,7 @@
 
 - [nettools](#nettools)
 - [About](#about)
+- [Run this image](#run-this-image)
 - [Contributing](#contributing)
   - [Updating this image](#updating-this-image)
   - [Publishing the image](#publishing-the-image)
@@ -47,6 +48,31 @@ Tools:
 * nmap
 
 Please see the [Dockerfile](Dockerfile) for a complete list of tools.
+
+# Run this image
+
+In Docker container:
+
+```bash
+docker run -it --rm --name nettools aeciopires/nettools:1.0.0 bash
+```
+
+In Kubernetes cluster:
+
+Access the Kubernetes cluster and run this command.
+
+```bash
+kubectl run --rm -it nettools-$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:1.0.0 -n default -- bash
+```
+
+Creating alias ``nettools`` with this command:
+
+```bash
+echo "alias nettools='kubectl run --rm -it nettools-$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:1.0.0 -n default -- bash'" >> $HOME/.bashrc
+source $HOME/.bashrc
+
+nettools
+```
 
 # Contributing
 
