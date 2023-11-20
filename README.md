@@ -21,6 +21,14 @@ Reference:
 * https://hub.docker.com/r/pmietlicki/nettools
 * https://hub.docker.com/r/travelping/nettools
 
+Repository in Docker Hub:
+* [hub.docker.com/r/aeciopires/nettools](https://hub.docker.com/r/aeciopires/nettools)
+* [https://hub.docker.com/r/aeciopires/nettools/tags](https://hub.docker.com/r/aeciopires/nettools/tags)
+
+> Attention!!!
+> This image has binaries and has been compiled to support the x86_64 processor only
+
+
 Tools:
 * vim
 * nano
