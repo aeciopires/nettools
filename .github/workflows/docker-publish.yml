@@ -17,8 +17,8 @@ name: Docker Multi-Arch
 # https://github.com/pabloromeo/docker-dogecoin/blob/master/Dockerfile
 on:
   push:
-    branches: 
-      - "main"
+    #branches: 
+    #  - "main"
     # Publish semver tags as releases.
     tags: 
       - 'v*.*.*'
@@ -93,11 +93,13 @@ jobs:
             latest=auto
           # Docker tags based on the following events/attributes
           tags: |
-            type=ref,event=branch
-            type=ref,event=tag
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
+            type=match,pattern=\d.\d.\d,enable=true
+            type=semver,pattern={{version}},value=,enable=true,priority=900
+            type=semver,pattern={{major}}.{{minor}},value=,enable=true,priority=900
+            type=semver,pattern={{major}},value=,enable=true,priority=900
+            type=ref,event=tag,enable=true,priority=600
+            type=ref,event=branch,enable=false,priority=600
+            type=sha,prefix=sha-,format=short,enable=false,priority=100
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
