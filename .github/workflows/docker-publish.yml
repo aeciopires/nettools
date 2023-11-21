@@ -24,6 +24,7 @@ on:
   #  branches: [ "main" ]
 
   workflow_dispatch:
+    branches: [main]
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -85,6 +86,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           # Docker tags based on the following events/attributes
           tags: |
+            type=ref,event=branch
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
