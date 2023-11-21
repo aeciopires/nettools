@@ -88,7 +88,7 @@ jobs:
         uses: docker/metadata-action@v5.0.0
         with:
           images: |
-            name=${{ env.IMAGE_NAME }},enable=false
+            name=${{ env.IMAGE_NAME }},enable=true
           flavor: |
             latest=auto
           # Docker tags based on the following events/attributes
@@ -103,12 +103,17 @@ jobs:
 
       # Extract git reference (tags) for Docker
       # https://github.com/orgs/community/discussions/26686#discussioncomment-3252857
+      # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
       - name: Extract Docker tag
         id: tag
         run: |
-          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
-          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
-          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+          echo "SOURCE_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+          echo "SOURCE_BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+          echo "SOURCE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          echo "TAG_VERSION=$(echo ${GITHUB_REF#refs/tags/} | cut -d'v' -f2)" >> $GITHUB_OUTPUT
+          echo "TAG_MINOR=$(echo ${GITHUB_REF#refs/tags/} | cut -d'v' -f2 | cut -d'.' -f1,2)" >> $GITHUB_OUTPUT
+          echo "TAG_MAJOR=$(echo ${GITHUB_REF#refs/tags/} | cut -d'v' -f2 | cut -d'.' -f1)" >> $GITHUB_OUTPUT
+          echo "TAG_LATEST=latest" >> $GITHUB_OUTPUT
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -119,7 +124,11 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.tag.outputs.SOURCE_TAG }}
+          tags: |
+            ${{ steps.tag.outputs.TAG_VERSION }}
+            ${{ steps.tag.outputs.TAG_MINOR }}
+            ${{ steps.tag.outputs.TAG_MAJOR }}
+            ${{ steps.tag.outputs.TAG_LATEST }}
           labels: ${{ steps.metadata.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
