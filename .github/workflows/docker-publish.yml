@@ -124,10 +124,10 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ${{ steps.tag.outputs.TAG_VERSION }}
-            ${{ steps.tag.outputs.TAG_MINOR }}
-            ${{ steps.tag.outputs.TAG_MAJOR }}
-            ${{ steps.tag.outputs.TAG_LATEST }}
+            "${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.TAG_VERSION }}"
+            "${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.TAG_MINOR }}"
+            "${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.TAG_MAJOR }}"
+            "${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.TAG_LATEST }}"
           labels: ${{ steps.metadata.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
