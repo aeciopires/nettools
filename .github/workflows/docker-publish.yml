@@ -103,6 +103,7 @@ jobs:
       # Extract git reference (tags) for Docker
       # https://github.com/orgs/community/discussions/26686#discussioncomment-3252857
       # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+      # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-masking-a-generated-output-within-a-single-job
       - name: Extract Docker tag
         id: tag
         run: |
@@ -121,6 +122,7 @@ jobs:
         uses: docker/build-push-action@v5.0.0
         with:
           context: .
+          file: Dockerfile
           platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
           push: ${{ github.event_name != 'pull_request' }}
           tags: |

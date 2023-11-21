@@ -8,6 +8,8 @@
 - [Contributing](#contributing)
   - [Updating this image](#updating-this-image)
   - [Publishing the image](#publishing-the-image)
+    - [Option-1](#option-1)
+    - [Option-2](#option-2)
 - [License](#license)
 
 <!-- TOC -->
@@ -26,7 +28,7 @@ Repository in Docker Hub:
 * [https://hub.docker.com/r/aeciopires/nettools/tags](https://hub.docker.com/r/aeciopires/nettools/tags)
 
 > Attention!!!
-> This image has binaries and has been compiled to support the x86_64 processor only
+> This image has support the linux/amd64, linux/arm/v6, linux/arm/v7 and linux/arm64 processor architecture
 
 
 Tools:
@@ -111,7 +113,16 @@ make container
 
 ## Publishing the image
 
-* Create or access your account in Docker Hub and create the repository for custom image. Example: https://hub.docker.com/r/DOCKER_HUB_ACCOUNT/nettools
+### Option 1
+
+* Create or access your account in Docker Hub and create the repository for custom image. Example: https://hub.docker.com/r/DOCKER_HUB_ACCOUNT/nettools. 
+
+* Create a git tag and send it to the remote repository. The image will be built for various processor architectures and pushed to Docker Hub.
+
+
+### Option 2
+
+* Create or access your account in Docker Hub and create the repository for custom image. Example: https://hub.docker.com/r/DOCKER_HUB_ACCOUNT/nettools. 
 
 * Commands to publish the image:
 
@@ -120,6 +131,8 @@ cd nettools
 
 make publish
 ```
+
+* The image will be built for linux/amd64 processor architecture only and pushed to Docker Hub https://hub.docker.com/r/DOCKER_HUB_ACCOUNT/nettools.
 
 # License
 
