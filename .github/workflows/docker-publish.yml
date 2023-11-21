@@ -20,7 +20,7 @@ on:
     branches: [ "main" ]
     # Publish semver tags as releases.
     #tags: [ 'v*.*.*' ]
-    tags: [ '*.*.*' ]
+    tags: [ '*' ]
   #pull_request:
   #  branches: [ "main" ]
 
