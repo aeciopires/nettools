@@ -87,7 +87,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5.0.0
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: |
+            name=${{ env.IMAGE_NAME }},enable=false
+          flavor: |
+            latest=auto
           # Docker tags based on the following events/attributes
           tags: |
             type=ref,event=branch
@@ -95,7 +98,6 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
-            type=sha
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
