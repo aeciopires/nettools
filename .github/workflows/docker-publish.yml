@@ -87,8 +87,7 @@ jobs:
         id: metadata
         uses: docker/metadata-action@v5.0.0
         with:
-          images: |
-            name=${{ env.IMAGE_NAME }},enable=true
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           flavor: |
             latest=auto
           # Docker tags based on the following events/attributes
