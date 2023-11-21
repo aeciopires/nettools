@@ -11,7 +11,7 @@
 
 Date: 11/20/2023
 
-> This image has support the linux/amd64, linux/arm/v6, linux/arm/v7 and linux/arm64 processor architecture
+> This image supports the linux/amd64, linux/arm/v6, linux/arm/v7, and linux/arm64 processor architectures
 
 * Initial version.
 * **alpine**: 3.18.4

@@ -28,7 +28,7 @@ Repository in Docker Hub:
 * [https://hub.docker.com/r/aeciopires/nettools/tags](https://hub.docker.com/r/aeciopires/nettools/tags)
 
 > Attention!!!
-> This image has support the linux/amd64, linux/arm/v6, linux/arm/v7 and linux/arm64 processor architecture
+> This image supports the linux/amd64, linux/arm/v6, linux/arm/v7, and linux/arm64 processor architectures
 
 
 Tools:
