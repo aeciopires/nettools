@@ -10,6 +10,7 @@ name: Docker Multi-Arch
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
 # https://docs.github.com/en/actions/using-workflows/manually-running-a-workflow
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_dispatch
+# https://github.com/docker/metadata-action#semver
 # https://blog.devgenius.io/how-to-build-your-docker-images-using-multi-arch-to-support-arm64-m1-macbook-6ebc42a47cd7
 # https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions
 # https://docs.docker.com/security/for-developers/access-tokens/
