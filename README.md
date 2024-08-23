@@ -92,6 +92,8 @@ Access the Kubernetes cluster and run this command.
 
 ```bash
 kubectl apply -f nettools.yaml -n NAMESPACE
+
+kubectl exec -i -t deploy/nettools -n NAMESPACE -- bash
 ```
 
 # Contributing
