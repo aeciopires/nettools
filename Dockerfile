@@ -1,9 +1,15 @@
-FROM alpine:3.18.4
+FROM alpine:3.20.3
 
+# Set metadata
 LABEL maintainer="Aecio Pires" \
       date_create="11/20/2023" \
       description="A simple and small Docker image with some handy networking tools installed" \
       licensce="GPLv3"
+
+# Change sh to bash. Reference: https://github.com/moby/moby/issues/7281
+SHELL ["/bin/bash", "-c"]
+# Only MacOS using brew
+#SHELL ["/opt/homebrew/bin/bash", "-c"]
 
 #---------------------------------#
 # Variables
@@ -12,10 +18,10 @@ LABEL maintainer="Aecio Pires" \
 
 #-------- End - Variables --------#
 
-
-
+# Set user default
 USER root
 
+# Install packages
 RUN apk update \
     && apk add --no-cache --update \
     elinks \
@@ -43,9 +49,7 @@ RUN apk update \
     tcpdump \
     lshw \
     nmap \
-    busybox-extras \
-    libcrypto3=3.1.4-r1 \
-    libssl3=3.1.4-r1
+    busybox-extras
 
 # Clear cache of packages in Alpine Linux
 # Source: https://wiki.alpinelinux.org/wiki/Local_APK_cache
@@ -54,4 +58,4 @@ RUN rm -rf /var/cache/apk/* \
     && rm -rf /tmp/*
 
 # Entrypoint
-CMD bash
+CMD ["bash"]

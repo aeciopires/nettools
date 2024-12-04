@@ -5,11 +5,15 @@
 - [nettools](#nettools)
 - [About](#about)
 - [Run this image](#run-this-image)
+  - [In Docker container:](#in-docker-container)
+  - [In Kubernetes cluster:](#in-kubernetes-cluster)
+    - [CLI](#cli)
+    - [Manifest:](#manifest)
 - [Contributing](#contributing)
   - [Updating this image](#updating-this-image)
   - [Publishing the image](#publishing-the-image)
-    - [Option-1](#option-1)
-    - [Option-2](#option-2)
+    - [Option 1](#option-1)
+    - [Option 2](#option-2)
 - [License](#license)
 
 <!-- TOC -->
@@ -64,7 +68,7 @@ Please see the [Dockerfile](Dockerfile) for a complete list of tools.
 ## In Docker container:
 
 ```bash
-docker run -it --rm --name nettools aeciopires/nettools:1.0.0 bash
+docker run -it --rm --name nettools aeciopires/nettools:2.0.0
 ```
 
 ## In Kubernetes cluster:
@@ -74,13 +78,13 @@ docker run -it --rm --name nettools aeciopires/nettools:1.0.0 bash
 Access the Kubernetes cluster and run this command.
 
 ```bash
-kubectl run --rm -it nettools-$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:1.0.0 -n NAMESPACE -- bash
+kubectl run --rm -it nettools-$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:2.0.0 -n NAMESPACE
 ```
 
 Creating alias ``nettools`` with this command:
 
 ```bash
-echo "alias nettools='kubectl run --rm -it nettools-\$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:1.0.0 -n NAMESPACE -- bash'" >> $HOME/.bashrc
+echo "alias nettools='kubectl run --rm -it nettools-\$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:2.0.0 -n NAMESPACE'" >> $HOME/.bashrc
 source $HOME/.bashrc
 
 nettools
@@ -127,14 +131,13 @@ make container
 
 ### Option 1
 
-* Create or access your account in Docker Hub and create the repository for custom image. Example: https://hub.docker.com/r/DOCKER_HUB_ACCOUNT/nettools. 
+* Create or access your account in Docker Hub and create the repository for custom image. Example: https://hub.docker.com/r/DOCKER_HUB_ACCOUNT/nettools.
 
 * Create a git tag and send it to the remote repository. The image will be built for various processor architectures and pushed to Docker Hub.
 
-
 ### Option 2
 
-* Create or access your account in Docker Hub and create the repository for custom image. Example: https://hub.docker.com/r/DOCKER_HUB_ACCOUNT/nettools. 
+* Create or access your account in Docker Hub and create the repository for custom image. Example: https://hub.docker.com/r/DOCKER_HUB_ACCOUNT/nettools.
 
 * Commands to publish the image:
 

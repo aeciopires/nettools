@@ -5,13 +5,20 @@
 #---------------------------
 
 PATH_DOCKERFILE="./Dockerfile"
+
+# On Linux
 SHELL=/bin/bash
+# Only MacOS using brew
+#SHELL=/opt/homebrew/bin/bash
 
 # Change the value according to new releases
-VERSION="1.0.0"
+VERSION="2.0.0"
 
 # Change the value as needed
 APP_NAME="nettools"
+
+# Platforms supported. Reference: https://docs.docker.com/build/building/multi-platform/
+SUPPORTED_PLATFORMS="linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64"
 
 #----------------------------------------------------------------------------------------------------------
 
@@ -45,13 +52,14 @@ image:
 		echo "[ERROR] File not found: ${PATH_DOCKERFILE}"
 		exit 1
 	fi
-	docker build -t "${APP_NAME}:${VERSION}" .
+	docker buildx create --use --platform="${SUPPORTED_PLATFORMS}" --name multi-platform-builder
+	docker buildx build --platform="${SUPPORTED_PLATFORMS}" -t "${APP_NAME}:${VERSION}" .
 	mkdir /tmp/caches
 	docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/caches:/root/.cache/ aquasec/trivy image "${APP_NAME}:${VERSION}"
 
 container:
 	make requirements
-	docker run -it --rm --name "${APP_NAME}" "${APP_NAME}:${VERSION}" bash
+	docker run -it --rm --name "${APP_NAME}" "${APP_NAME}:${VERSION}"
 
 .ONESHELL:
 publish:

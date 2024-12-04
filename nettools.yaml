@@ -23,7 +23,7 @@ spec:
         app: nettools
     spec:
       containers:
-      - image: aeciopires/nettools:1.0.0
+      - image: aeciopires/nettools:2.0.0
         imagePullPolicy: IfNotPresent
         name: nettools
         # Just spin & wait forever
