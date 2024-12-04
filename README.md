@@ -5,10 +5,10 @@
 - [nettools](#nettools)
 - [About](#about)
 - [Run this image](#run-this-image)
-  - [In Docker container:](#in-docker-container)
-  - [In Kubernetes cluster:](#in-kubernetes-cluster)
+  - [In Docker container](#in-docker-container)
+  - [In Kubernetes cluster](#in-kubernetes-cluster)
     - [CLI](#cli)
-    - [Manifest:](#manifest)
+    - [Manifest](#manifest)
 - [Contributing](#contributing)
   - [Updating this image](#updating-this-image)
   - [Publishing the image](#publishing-the-image)
@@ -34,8 +34,8 @@ Repository in Docker Hub:
 > Attention!!!
 > This image supports the linux/amd64, linux/arm/v6, linux/arm/v7, and linux/arm64 processor architectures
 
-
 Tools:
+
 * vim
 * nano
 * elinks
@@ -65,13 +65,13 @@ Please see the [Dockerfile](Dockerfile) for a complete list of tools.
 
 # Run this image
 
-## In Docker container:
+## In Docker container
 
 ```bash
 docker run -it --rm --name nettools aeciopires/nettools:2.0.0
 ```
 
-## In Kubernetes cluster:
+## In Kubernetes cluster
 
 ### CLI
 
@@ -90,7 +90,7 @@ source $HOME/.bashrc
 nettools
 ```
 
-### Manifest:
+### Manifest
 
 Access the Kubernetes cluster and run this command.
 

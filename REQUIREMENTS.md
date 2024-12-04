@@ -33,7 +33,6 @@ sudo sh get-docker.sh
 # Add your user to the Docker group
 sudo usermod -aG docker $USER
 sudo setfacl -m user:$USER:rw /var/run/docker.sock
-
 ```
 
 References:
