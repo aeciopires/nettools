@@ -61,4 +61,5 @@ rm -rf /tmp/*
 EOF
 
 # Entrypoint
-CMD ["bash"]
+# Infinite loop to keep container run until be stop manually
+CMD ["bash","-c","while true; do sleep 30; done;"]
