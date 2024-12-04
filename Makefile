@@ -20,6 +20,15 @@ APP_NAME="nettools"
 # Platforms supported. Reference: https://docs.docker.com/build/building/multi-platform/
 SUPPORTED_PLATFORMS="linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64"
 
+# Refereces about the docker buildx:
+# https://docs.docker.com/build/building/multi-platform/
+# https://docs.docker.com/reference/cli/docker/buildx/build
+# https://unix.stackexchange.com/questions/748633/error-multiple-platforms-feature-is-currently-not-supported-for-docker-driver
+# https://collabnix.com/error-multiple-platforms-feature-is-currently-not-supported-for-docker-driver/
+# https://gist.github.com/brianjbayer/d80f60fc6084e77e049f0bb442449519
+# https://medium.com/@delphinenyaboke/error-multi-platform-build-is-not-supported-for-the-docker-driver-8883a7a26472
+# https://stackoverflow.com/questions/64403659/docker-buildx-image-not-showing-in-docker-image-ls
+
 #----------------------------------------------------------------------------------------------------------
 
 
@@ -52,7 +61,9 @@ image:
 		echo "[ERROR] File not found: ${PATH_DOCKERFILE}"
 		exit 1
 	fi
-	docker buildx create --use --platform="${SUPPORTED_PLATFORMS}" --name multi-platform-builder
+
+	#docker buildx create --use --platform="${SUPPORTED_PLATFORMS}" --name multi-platform-builder
+
 	docker buildx build --platform="${SUPPORTED_PLATFORMS}" -t "${APP_NAME}:${VERSION}" .
 	mkdir /tmp/caches
 	docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/caches:/root/.cache/ aquasec/trivy image "${APP_NAME}:${VERSION}"
