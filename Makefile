@@ -6,8 +6,8 @@
 
 PATH_DOCKERFILE="./Dockerfile"
 
-# On Linux
-SHELL=/bin/bash
+# Only Ubuntu
+SHELL=/usr/bin/bash
 # Only MacOS using brew
 #SHELL=/opt/homebrew/bin/bash
 
@@ -62,15 +62,19 @@ image:
 		exit 1
 	fi
 
-	#docker buildx create --use --platform="${SUPPORTED_PLATFORMS}" --name multi-platform-builder
+	read -rp 'Username of Docker Hub: ' DOCKER_HUB_ACCOUNT
+	read -rsp 'Password of Docker Hub: ' DOCKER_HUB_PASSWORD
+	docker login -u "$${DOCKER_HUB_ACCOUNT}" -p "$${DOCKER_HUB_PASSWORD}"
 
-	docker buildx build --platform="${SUPPORTED_PLATFORMS}" -t "${APP_NAME}:${VERSION}" .
+	docker buildx create --use --platform="${SUPPORTED_PLATFORMS}" --name multi-platform-builder
+	docker buildx build --platform="${SUPPORTED_PLATFORMS}" -t "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}" --push .
+	docker buildx build --platform="${SUPPORTED_PLATFORMS}" -t "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:latest" --push .
 	mkdir /tmp/caches
-	docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/caches:/root/.cache/ aquasec/trivy image "${APP_NAME}:${VERSION}"
+	docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/caches:/root/.cache/ aquasec/trivy image "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}"
 
 container:
 	make requirements
-	docker run -it --rm --name "${APP_NAME}" "${APP_NAME}:${VERSION}"
+	docker run -it --rm --name "${APP_NAME}" "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}"
 
 .ONESHELL:
 publish:
@@ -78,7 +82,5 @@ publish:
 	read -rp 'Username of Docker Hub: ' DOCKER_HUB_ACCOUNT
 	read -rsp 'Password of Docker Hub: ' DOCKER_HUB_PASSWORD
 	docker login -u "$${DOCKER_HUB_ACCOUNT}" -p "$${DOCKER_HUB_PASSWORD}"
-	docker tag "${APP_NAME}:${VERSION}" "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}"
-	docker tag "${APP_NAME}:${VERSION}" "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:latest"
 	docker push "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}"
 	docker push "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:latest"

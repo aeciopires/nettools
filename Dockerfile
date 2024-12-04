@@ -7,9 +7,10 @@ LABEL maintainer="Aecio Pires" \
       licensce="GPLv3"
 
 # Change sh to bash. Reference: https://github.com/moby/moby/issues/7281
-SHELL ["/bin/bash", "-c"]
-# Only MacOS using brew
-#SHELL ["/opt/homebrew/bin/bash", "-c"]
+# Only Ubuntu
+#SHELL ["/usr/bin/bash", "-c"]
+# Only Alpine
+SHELL ["/bin/sh", "-c"]
 
 #---------------------------------#
 # Variables
