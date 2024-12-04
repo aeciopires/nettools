@@ -23,8 +23,9 @@ SHELL ["/bin/sh", "-c"]
 USER root
 
 # Install packages
-RUN apk update \
-    && apk add --no-cache --update \
+RUN <<EOF 
+apk update
+apk add --no-cache --update \
     elinks \
     vim \
     nano \
@@ -55,8 +56,9 @@ RUN apk update \
 # Clear cache of packages in Alpine Linux
 # Source: https://wiki.alpinelinux.org/wiki/Local_APK_cache
 # https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management
-RUN rm -rf /var/cache/apk/* \
-    && rm -rf /tmp/*
+rm -rf /var/cache/apk/*
+rm -rf /tmp/*
+EOF
 
 # Entrypoint
 CMD ["bash"]
