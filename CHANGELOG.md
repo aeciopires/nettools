@@ -3,18 +3,40 @@
 <!-- TOC -->
 
 - [Changelog](#changelog)
+- [2.1.0](#210)
 - [2.0.0](#200)
 - [1.0.0](#100)
 
 <!-- TOC -->
 
-# 2.0.0
+# 2.1.0
 
-Date: 12/04/2023
+Date: 03/19/2025
 
 > This image supports the linux/amd64, linux/arm/v6, linux/arm/v7, and linux/arm64 processor architectures
 
-* Initial version.
+* **alpine**: 3.21.3
+* Result of vulnerability scan with aquasec/trivy:
+
+```
+Trivy Report Summary
+
+┌───────────────────────────────────────────┬────────┬─────────────────┬─────────┐
+│                  Target                   │  Type  │ Vulnerabilities │ Secrets │
+├───────────────────────────────────────────┼────────┼─────────────────┼─────────┤
+│ aeciopires/nettools:2.1.0 (alpine 3.21.3) │ alpine │        0        │    -    │
+└───────────────────────────────────────────┴────────┴─────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+```
+
+# 2.0.0
+
+Date: 12/04/2024
+
+> This image supports the linux/amd64, linux/arm/v6, linux/arm/v7, and linux/arm64 processor architectures
+
 * **alpine**: 3.20.3
 * Result of vulnerability scan with aquasec/trivy:
 

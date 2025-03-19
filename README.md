@@ -10,10 +10,9 @@
     - [CLI](#cli)
     - [Manifest](#manifest)
 - [Contributing](#contributing)
-  - [Updating this image](#updating-this-image)
-  - [Publishing the image](#publishing-the-image)
-    - [Option 1](#option-1)
-    - [Option 2](#option-2)
+  - [Updating and publishing this image](#updating-and-publishing-this-image)
+  - [Creating container](#creating-container)
+- [Maintainers](#maintainers)
 - [License](#license)
 
 <!-- TOC -->
@@ -68,7 +67,7 @@ Please see the [Dockerfile](Dockerfile) for a complete list of tools.
 ## In Docker container
 
 ```bash
-docker run -it --rm --name nettools aeciopires/nettools:2.0.0
+docker run -it --rm --name nettools aeciopires/nettools:2.1.0
 ```
 
 ## In Kubernetes cluster
@@ -78,13 +77,13 @@ docker run -it --rm --name nettools aeciopires/nettools:2.0.0
 Access the Kubernetes cluster and run this command.
 
 ```bash
-kubectl run --rm -it nettools-$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:2.0.0 -n NAMESPACE
+kubectl run --rm -it nettools-$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:2.1.0 -n NAMESPACE -- /bin/bash
 ```
 
 Creating alias ``nettools`` with this command:
 
 ```bash
-echo "alias nettools='kubectl run --rm -it nettools-\$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:2.0.0 -n NAMESPACE'" >> $HOME/.bashrc
+echo "alias nettools='kubectl run --rm -it nettools-\$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:2.1.0 -n NAMESPACE -- /bin/bash'" >> $HOME/.bashrc
 source $HOME/.bashrc
 
 nettools
@@ -105,7 +104,9 @@ kubectl exec -i -t deploy/nettools -n NAMESPACE -- bash
 * See the [REQUIREMENTS.md](REQUIREMENTS.md) file.
 * See the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
-## Updating this image
+## Updating and publishing this image
+
+* Create or access your account in Docker Hub and create the repository for custom image. Example: https://hub.docker.com/r/DOCKER_HUB_ACCOUNT/nettools.
 
 * Change the ``Dockerfile``.
 
@@ -119,6 +120,8 @@ cd nettools
 make image
 ```
 
+## Creating container
+
 Commands to run a container:
 
 ```bash
@@ -127,27 +130,9 @@ cd nettools
 make container
 ```
 
-## Publishing the image
+# Maintainers
 
-### Option 1
-
-* Create or access your account in Docker Hub and create the repository for custom image. Example: https://hub.docker.com/r/DOCKER_HUB_ACCOUNT/nettools.
-
-* Create a git tag and send it to the remote repository. The image will be built for various processor architectures and pushed to Docker Hub.
-
-### Option 2
-
-* Create or access your account in Docker Hub and create the repository for custom image. Example: https://hub.docker.com/r/DOCKER_HUB_ACCOUNT/nettools.
-
-* Commands to publish the image:
-
-```bash
-cd nettools
-
-make publish
-```
-
-* The image will be built for linux/amd64 processor architecture only and pushed to Docker Hub https://hub.docker.com/r/DOCKER_HUB_ACCOUNT/nettools.
+- Aécio dos Santos Pires ([linkedin.com/in/aeciopires](https://www.linkedin.com/in/aeciopires))
 
 # License
 

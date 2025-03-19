@@ -4,15 +4,15 @@
 #---------------------------
 #---------------------------
 
+# Change the value according to new releases
+VERSION="2.1.0"
+
 PATH_DOCKERFILE="./Dockerfile"
 
 # Only Ubuntu
 SHELL=/usr/bin/bash
 # Only MacOS using brew
 #SHELL=/opt/homebrew/bin/bash
-
-# Change the value according to new releases
-VERSION="2.0.0"
 
 # Change the value as needed
 APP_NAME="nettools"
@@ -67,20 +67,22 @@ image:
 	docker login -u "$${DOCKER_HUB_ACCOUNT}" -p "$${DOCKER_HUB_PASSWORD}"
 
 	docker buildx create --use --platform="${SUPPORTED_PLATFORMS}" --name multi-platform-builder
-	docker buildx build --platform="${SUPPORTED_PLATFORMS}" -t "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}" --push .
-	docker buildx build --platform="${SUPPORTED_PLATFORMS}" -t "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:latest" --push .
+	docker buildx build --push --platform="${SUPPORTED_PLATFORMS}" -t "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}" .
+	docker buildx build --push --platform="${SUPPORTED_PLATFORMS}" -t "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:latest" .
 	mkdir /tmp/caches
 	docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/caches:/root/.cache/ aquasec/trivy image "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}"
 
 container:
 	make requirements
-	docker run -it --rm --name "${APP_NAME}" "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}"
+	read -rp 'Username of Docker Hub: ' DOCKER_HUB_ACCOUNT
+
+	docker run -it --rm --name "${APP_NAME}" "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}" /bin/bash
+
+logs:
+	make requirements
+	docker logs -f "${APP_NAME}"
 
 .ONESHELL:
-publish:
+down:
 	make requirements
-	read -rp 'Username of Docker Hub: ' DOCKER_HUB_ACCOUNT
-	read -rsp 'Password of Docker Hub: ' DOCKER_HUB_PASSWORD
-	docker login -u "$${DOCKER_HUB_ACCOUNT}" -p "$${DOCKER_HUB_PASSWORD}"
-	docker push "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}"
-	docker push "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:latest"
+	docker rm -f "${APP_NAME}"
