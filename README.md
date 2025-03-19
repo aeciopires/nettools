@@ -83,7 +83,7 @@ kubectl run --rm -it nettools-$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) 
 Creating alias ``nettools`` with this command:
 
 ```bash
-echo "alias nettools='kubectl run --rm -it nettools-\$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:2.1.0 -n NAMESPACE -- /bin/bash'" >> $HOME/.bashrc
+echo "alias nettools='kubectl run --rm -it nettools-$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:2.1.0 -n NAMESPACE -- /bin/bash'" >> $HOME/.bashrc
 source $HOME/.bashrc
 
 nettools
