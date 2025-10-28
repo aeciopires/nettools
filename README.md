@@ -67,7 +67,7 @@ Please see the [Dockerfile](Dockerfile) for a complete list of tools.
 ## In Docker container
 
 ```bash
-docker run -it --rm --name nettools aeciopires/nettools:2.1.0
+docker run -it --rm --name nettools aeciopires/nettools:2.2.0
 ```
 
 ## In Kubernetes cluster
@@ -77,13 +77,13 @@ docker run -it --rm --name nettools aeciopires/nettools:2.1.0
 Access the Kubernetes cluster and run this command.
 
 ```bash
-kubectl run --rm -it nettools-$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:2.1.0 -n NAMESPACE -- /bin/bash
+kubectl run --rm -it nettools-$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:2.2.0 -n NAMESPACE -- /bin/bash
 ```
 
 Creating alias ``nettools`` with this command:
 
 ```bash
-echo "alias nettools='kubectl run --rm -it nettools-$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:2.1.0 -n NAMESPACE -- /bin/bash'" >> $HOME/.bashrc
+echo "alias nettools='kubectl run --rm -it nettools-$(< /dev/urandom tr -dc a-z-0-9 | head -c${1:-4}) --image=aeciopires/nettools:2.2.0 -n NAMESPACE -- /bin/bash'" >> $HOME/.bashrc
 source $HOME/.bashrc
 
 nettools
