@@ -36,11 +36,11 @@ sudo setfacl -m user:$USER:rw /var/run/docker.sock
 ```
 
 References:
-* Ubuntu: https://docs.docker.com/engine/install/ubuntu/
-* Debian: https://docs.docker.com/engine/install/debian/
-* CentOS: https://docs.docker.com/engine/install/centos/
-* MacOS: https://docs.docker.com/desktop/install/mac-install/
-* https://docs.docker.com/engine/install/linux-postinstall/#configure-docker-to-start-on-boot
+- Ubuntu: https://docs.docker.com/engine/install/ubuntu/
+- Debian: https://docs.docker.com/engine/install/debian/
+- CentOS: https://docs.docker.com/engine/install/centos/
+- MacOS: https://docs.docker.com/desktop/install/mac-install/
+- https://docs.docker.com/engine/install/linux-postinstall/#configure-docker-to-start-on-boot
 
 # Trivy
 
@@ -55,5 +55,5 @@ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/caches:/roo
 ```
 
 References:
-* https://aquasecurity.github.io/trivy/v0.47/getting-started/installation/#use-container-image
-* https://aquasecurity.github.io/trivy/
+- https://aquasecurity.github.io/trivy/v0.47/getting-started/installation/#use-container-image
+- https://aquasecurity.github.io/trivy/

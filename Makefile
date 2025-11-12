@@ -5,7 +5,7 @@
 #---------------------------
 
 # Change the value according to new releases
-VERSION="2.2.0"
+VERSION="3.0.0"
 
 PATH_DOCKERFILE="./Dockerfile"
 
@@ -69,7 +69,7 @@ image:
 	docker buildx create --use --platform="${SUPPORTED_PLATFORMS}" --name multi-platform-builder
 	docker buildx build --push --platform="${SUPPORTED_PLATFORMS}" -t "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}" .
 	docker buildx build --push --platform="${SUPPORTED_PLATFORMS}" -t "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:latest" .
-	mkdir /tmp/caches
+	mkdir -p /tmp/caches
 	docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/caches:/root/.cache/ aquasec/trivy image "$${DOCKER_HUB_ACCOUNT}/${APP_NAME}:${VERSION}"
 
 container:
