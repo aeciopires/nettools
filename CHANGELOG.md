@@ -13,7 +13,7 @@
 
 # 3.0.0
 
-Date: 10/28/2025
+Date: 11/12/2025
 
 > This image supports the linux/amd64, linux/arm/v6, linux/arm/v7, and linux/arm64 processor architectures
 
