@@ -18,7 +18,7 @@ cat > /etc/motd << EOF
 ██║ ╚████║███████╗   ██║      ██║   ╚██████╔╝╚██████╔╝███████╗███████║
 ╚═╝  ╚═══╝╚══════╝   ╚═╝      ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝╚══════╝
 
-Welcome to NetTools container! (Reference: github.com/aeciopires/nettools)
+Welcome to NetTools container! (Reference: https://github.com/aeciopires/nettools)
 
 +++++++++++++++++++++++++++++++ CONTAINER/NODE INFO ++++++++++++++++++++++++++
 

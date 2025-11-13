@@ -62,8 +62,12 @@ ZSH_DISABLE_COMPFIX="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  kube-ps1
   git
   kubectl
+  kubectx
+  k9s
+  helm
   zsh-autosuggestions
   yarn
   web-search
@@ -114,11 +118,23 @@ cat /etc/motd
 
 ### VISUAL CUSTOMISATION ###
 # Elements options of left prompt (remove the @username context)
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(host dir rbenv)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(host dir rbenv vcs kubecontext)
 # Elements options of right prompt
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 # Add a second prompt line for the command
 POWERLEVEL9K_PROMPT_ON_NEWLINE=false
+# Customize Kubernetes segments (optional)
+POWERLEVEL9K_KUBECONTEXT_TEMPLATE='%n:%k'  # namespace:context
+POWERLEVEL9K_KUBECONTEXT_DEFAULT_CONTENT_EXPANSION='${P9K_KUBECONTEXT_NAME}:${P9K_KUBECONTEXT_NAMESPACE}'
+POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|k9s'
+POWERLEVEL9K_KUBECONTEXT_ICON='\uF3D1 ' # K8s icon
+POWERLEVEL9K_KUBENAMESPACE_ICON='\uF016 ' # Namespace icon
+POWERLEVEL9K_KUBECONTEXT_SEPARATOR='|'
+# Customize Git segment (optional)
+POWERLEVEL9K_VCS_BRANCH_ICON='\uF126 ' # Branch icon
+POWERLEVEL9K_VCS_UNTRACKED_ICON='\uF068 ' # Untracked icon
+POWERLEVEL9K_VCS_MODIFIED_ICON='\uF044 ' # Modified icon
+POWERLEVEL9K_VCS_CLEAN_ICON='\uF00C ' # Clean icon
 
 # Add a space in the first prompt
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=''
@@ -130,13 +146,14 @@ POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=''
 #fi
 #POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%B%F{black}%K{yellow}%} $user_symbol%{%b%f%k%F{yellow}%} %{%f%}"
 
+source "/usr/share/oh-my-zsh/plugins/kube-ps1/kube-ps1.plugin.zsh"
+PS1='$(kube_ps1)'$PS1
 
 # Change the git status to red when something isn't committed and pushed
 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='red'
 
 # Add a new line after the global prompt
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-
 
 # Colorise the top Tabs of Iterm2 with the same color as background
 # Just change the 18/26/33 wich are the rgb values

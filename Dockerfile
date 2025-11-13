@@ -64,6 +64,7 @@ apk add --no-cache --update \
     lshw \
     lz4 \
     mtr \
+    mlocate \
     nano \
     net-tools \
     netcat-openbsd \
@@ -101,19 +102,25 @@ RUN <<EOF
 curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -
+echo "source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+echo "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
 EOF
 
 COPY files/zshrc .zshrc
 COPY files/99-motd.sh /etc/profile.d/99-motd.sh
 
-# Fix permissions for OpenShift
+# Customizing root files
 RUN <<EOF
 
+# Customized prompt for bash
+curl -o /root/.bash_prompt https://gist.githubusercontent.com/aeciopires/6738c602e2d6832555d32df78aa3b9bb/raw/b96be4dcaee6db07690472aecbf73fcf953a7e91/.bash_prompt
+
 echo """
+source /root/.bash_prompt
 /etc/profile.d/99-motd.sh
 cat /etc/motd
 """ >> /root/.bashrc
-
 
 echo """
 /etc/profile.d/99-motd.sh
@@ -128,7 +135,7 @@ cat /etc/motd
 """ >> /etc/profile
 
 chmod -R g=u /root
-chmod +x /etc/profile.d/99-motd.sh /root/.ashrc
+chmod +x /etc/profile.d/99-motd.sh /root/.ashrc /root/.bash_prompt
 EOF
 
 # Entrypoint
