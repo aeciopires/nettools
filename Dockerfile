@@ -6,7 +6,7 @@ LABEL maintainer="Aecio Pires" \
       description="A simple and small Docker image with some handy networking tools installed" \
       licensce="GPLv3"
 
-# Change sh to bash. Reference: https://github.com/moby/moby/issues/7281
+# Changing sh to bash. Reference: https://github.com/moby/moby/issues/7281
 # Only Ubuntu
 #SHELL ["/usr/bin/bash", "-c"]
 # Only Alpine
@@ -23,7 +23,7 @@ SHELL ["/bin/sh", "-c"]
 USER root
 WORKDIR /root
 
-# Install packages
+# Installing packages
 RUN <<EOF 
 echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
 echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
@@ -90,43 +90,43 @@ apk add --no-cache --update \
     zsh \
     zstd
 
-# Clear cache of packages in Alpine Linux
+# Clearing cache of packages in Alpine Linux
 # Source: https://wiki.alpinelinux.org/wiki/Local_APK_cache
 # https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management
 rm -rf /var/cache/apk/*
 rm -rf /tmp/*
 EOF
 
-# ZSH Themes
+# Getting ZSH plugins and themes
 RUN <<EOF
 curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -
-echo "source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
-echo "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
 EOF
 
+# Copying files from host to container
 COPY files/zshrc .zshrc
 COPY files/99-motd.sh /etc/profile.d/99-motd.sh
 
-# Customizing root files
 RUN <<EOF
+# Getting custom prompt script for bash
+curl -o $HOME/.bash_prompt https://gist.githubusercontent.com/aeciopires/6738c602e2d6832555d32df78aa3b9bb/raw/b96be4dcaee6db07690472aecbf73fcf953a7e91/.bash_prompt
 
-# Customized prompt for bash
-curl -o /root/.bash_prompt https://gist.githubusercontent.com/aeciopires/6738c602e2d6832555d32df78aa3b9bb/raw/b96be4dcaee6db07690472aecbf73fcf953a7e91/.bash_prompt
-
+# Configuring prompt and motd for bash
 echo """
-source /root/.bash_prompt
+source $HOME//.bash_prompt
 /etc/profile.d/99-motd.sh
 cat /etc/motd
-""" >> /root/.bashrc
+""" >> $HOME/.bashrc
 
+# Configuring motd for ash
 echo """
 /etc/profile.d/99-motd.sh
 cat /etc/motd
-""" >> /root/.ashrc
+""" >> $HOME/.ashrc
 
+# Configuring motd for profile
 echo """
 if [ -t 0 ]; then
     [ -f /etc/profile.d/motd.sh ] && . /etc/profile.d/motd.sh
@@ -134,8 +134,9 @@ fi
 cat /etc/motd
 """ >> /etc/profile
 
-chmod -R g=u /root
-chmod +x /etc/profile.d/99-motd.sh /root/.ashrc /root/.bash_prompt
+# Fixing permissions
+chmod -R g=u $HOME/
+chmod +x /etc/profile.d/99-motd.sh $HOME/.ashrc $HOME/.bash_prompt
 EOF
 
 # Entrypoint

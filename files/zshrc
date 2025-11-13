@@ -1,36 +1,38 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#export TERM="xterm-256color"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="robbyrussell"
 
-ZSH_DISABLE_COMPFIX="true"
-
-# Set list of themes to load
-# Setting this variable when ZSH_THEME=random
-# cause zsh load theme from this variable instead of
-# looking in ~/.oh-my-zsh/themes/
-# An empty array have no effect
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# zstyle ':omz:update' frequency 13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -42,6 +44,9 @@ ZSH_DISABLE_COMPFIX="true"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -51,17 +56,22 @@ ZSH_DISABLE_COMPFIX="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  git
   kube-ps1
   git
   kubectl
@@ -69,6 +79,7 @@ plugins=(
   k9s
   helm
   zsh-autosuggestions
+  zsh-syntax-highlighting
   yarn
   web-search
   jsontools
@@ -92,71 +103,22 @@ cat /etc/motd
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#   export EDITOR='nvim'
 # fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# export ARCHFLAGS="-arch $(uname -m)"
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-# Reload the plugin to highlight the commands each time Iterm2 starts
-#source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-
-### VISUAL CUSTOMISATION ###
-# Elements options of left prompt (remove the @username context)
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(host dir rbenv vcs kubecontext)
-# Elements options of right prompt
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-# Add a second prompt line for the command
-POWERLEVEL9K_PROMPT_ON_NEWLINE=false
-# Customize Kubernetes segments (optional)
-POWERLEVEL9K_KUBECONTEXT_TEMPLATE='%n:%k'  # namespace:context
-POWERLEVEL9K_KUBECONTEXT_DEFAULT_CONTENT_EXPANSION='${P9K_KUBECONTEXT_NAME}:${P9K_KUBECONTEXT_NAMESPACE}'
-POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|k9s'
-POWERLEVEL9K_KUBECONTEXT_ICON='\uF3D1 ' # K8s icon
-POWERLEVEL9K_KUBENAMESPACE_ICON='\uF016 ' # Namespace icon
-POWERLEVEL9K_KUBECONTEXT_SEPARATOR='|'
-# Customize Git segment (optional)
-POWERLEVEL9K_VCS_BRANCH_ICON='\uF126 ' # Branch icon
-POWERLEVEL9K_VCS_UNTRACKED_ICON='\uF068 ' # Untracked icon
-POWERLEVEL9K_VCS_MODIFIED_ICON='\uF044 ' # Modified icon
-POWERLEVEL9K_VCS_CLEAN_ICON='\uF00C ' # Clean icon
-
-# Add a space in the first prompt
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=''
-
-# Visual customisation of the second prompt line
-#local user_symbol="$"
-#if [[ $(print -P "%#") =~ "#" ]]; then
-#    user_symbol = "#"
-#fi
-#POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%B%F{black}%K{yellow}%} $user_symbol%{%b%f%k%F{yellow}%} %{%f%}"
-
 source "/usr/share/oh-my-zsh/plugins/kube-ps1/kube-ps1.plugin.zsh"
-PS1='$(kube_ps1)'$PS1
-
-# Change the git status to red when something isn't committed and pushed
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='red'
-
-# Add a new line after the global prompt
-POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-
-# Colorise the top Tabs of Iterm2 with the same color as background
-# Just change the 18/26/33 wich are the rgb values
-echo -e "\033]6;1;bg;red;brightness;18\a"
-echo -e "\033]6;1;bg;green;brightness;26\a"
-echo -e "\033]6;1;bg;blue;brightness;33\a"
+PROMPT='$(kube_ps1)'$PROMPT
